@@ -22,8 +22,8 @@ describe WorkingHours::Computation do
     it 'can add working days to ActiveSupport::TimeWithZone' do
       time = Time.utc(1991, 11, 15, 14, 00, 42)
       time_monday = Time.utc(1991, 11, 18, 14, 00, 42)
-      time_with_zone = ActiveSupport::TimeWithZone.new(time, 'Tokyo')
-      expect(add_days(time_with_zone, 1)).to eq(ActiveSupport::TimeWithZone.new(time_monday, 'Tokyo'))
+      time_with_zone = ActiveSupport::TimeWithZone.new(time, ActiveSupport::TimeZone.new('Tokyo'))
+      expect(add_days(time_with_zone, 1)).to eq(ActiveSupport::TimeWithZone.new(time_monday, ActiveSupport::TimeZone.new('Tokyo')))
     end
 
     it 'skips non worked days' do

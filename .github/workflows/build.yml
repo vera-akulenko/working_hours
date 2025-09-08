@@ -14,11 +14,16 @@ jobs:
         gemfile:
           - gemfiles/Gemfile.activesupport-7.1.x
           - gemfiles/Gemfile.activesupport-7.2.x
-          - gemfiles/Gemfile.activesupport-8.x
+          - gemfiles/Gemfile.activesupport-8.0.x
+          - gemfiles/Gemfile.activesupport-8.1.x
         exclude:
-            - gemfile: gemfiles/Gemfile.activesupport-8.x
+            - gemfile: gemfiles/Gemfile.activesupport-8.0.x
               ruby_version: 3.1.6
-            - gemfile: gemfiles/Gemfile.activesupport-8.x
+            - gemfile: gemfiles/Gemfile.activesupport-8.0.x
+              ruby_version: jruby-9.4.9.0
+            - gemfile: gemfiles/Gemfile.activesupport-8.1.x
+              ruby_version: 3.1.6
+            - gemfile: gemfiles/Gemfile.activesupport-8.1.x
               ruby_version: jruby-9.4.9.0
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
