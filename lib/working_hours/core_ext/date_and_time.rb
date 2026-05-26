@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'active_support/time_with_zone'
 require 'working_hours/module'
 
 module WorkingHours
   module CoreExt
     module DateAndTime
-
-      def self.included base
+      def self.included(base)
         base.class_eval do
           alias_method :minus_without_working_hours, :-
           alias_method :-, :minus_with_working_hours
@@ -15,7 +16,7 @@ module WorkingHours
       end
 
       def plus_with_working_hours(other)
-        if WorkingHours::Duration === other
+        if other.is_a?(WorkingHours::Duration)
           other.since(self)
         else
           plus_without_working_hours(other)
@@ -23,7 +24,7 @@ module WorkingHours
       end
 
       def minus_with_working_hours(other)
-        if WorkingHours::Duration === other
+        if other.is_a?(WorkingHours::Duration)
           other.until(self)
         else
           minus_without_working_hours(other)
@@ -57,6 +58,8 @@ class Time
   include WorkingHours::CoreExt::DateAndTime
 end
 
-class ActiveSupport::TimeWithZone
-  include WorkingHours::CoreExt::DateAndTime
+module ActiveSupport
+  class TimeWithZone
+    include WorkingHours::CoreExt::DateAndTime
+  end
 end

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe WorkingHours::CoreExt::Integer do
-
   describe '#working' do
     it 'returns a DurationProxy' do
       proxy = 42.working
@@ -9,5 +10,4 @@ describe WorkingHours::CoreExt::Integer do
       expect(proxy.value).to eq(42)
     end
   end
-
 end

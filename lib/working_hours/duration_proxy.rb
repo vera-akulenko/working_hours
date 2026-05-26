@@ -1,8 +1,9 @@
-require "working_hours/duration"
+# frozen_string_literal: true
+
+require 'working_hours/duration'
 
 module WorkingHours
   class DurationProxy
-
     attr_accessor :value
 
     def initialize(value)

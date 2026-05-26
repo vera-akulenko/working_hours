@@ -77,7 +77,7 @@ The working hours configuration is thread safe and consists of a hash defining w
 
 ```ruby
 # Configure working hours
-WorkingHours::Config.working_hours = {
+WorkingHours::Config.new.working_hours = {
   :tue => {'09:00' => '12:00', '13:00' => '17:00'},
   :wed => {'09:00' => '12:00', '13:00' => '17:00'},
   :thu => {'09:00' => '12:00', '13:00' => '17:00'},
@@ -86,16 +86,16 @@ WorkingHours::Config.working_hours = {
 }
 
 # Configure timezone (uses activesupport, defaults to UTC)
-WorkingHours::Config.time_zone = 'Paris'
+WorkingHours::Config.new.time_zone = 'Paris'
 
 # Configure holidays
-WorkingHours::Config.holidays = [Date.new(2014, 12, 31)]
+WorkingHours::Config.new.holidays = [Date.new(2014, 12, 31)]
 ```
 
 Or you can set it for the duration of a block with the `with_config` method, this is particularly useful with `around_filter`:
 
 ```ruby
-WorkingHours::Config.with_config(working_hours: {mon:{'09:00' => '18:00'}}, holidays: [], time_zone: 'Paris') do
+WorkingHours::Config.new.with_config(working_hours: {mon:{'09:00' => '18:00'}}, holidays: [], time_zone: 'Paris') do
   # Intense calculations
 end
 ```
@@ -113,7 +113,7 @@ If *any* hours are set for a calendar day in `holiday_hours`, then the `working_
 
 ```ruby
 # Configure holiday hours
-WorkingHours::Config.holiday_hours = {Date.new(2020, 12, 24) => {'09:00' => '12:00', '13:00' => '15:00'}}
+WorkingHours::Config.new.holiday_hours = {Date.new(2020, 12, 24) => {'09:00' => '12:00', '13:00' => '15:00'}}
 ```
 
 ### Handling errors

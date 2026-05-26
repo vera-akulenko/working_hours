@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe WorkingHours::Duration do
-
   describe '#initialize' do
     it 'is initialized with a number and a type' do
       duration = WorkingHours::Duration.new(5, :days)
@@ -30,9 +31,9 @@ describe WorkingHours::Duration do
     end
 
     it 'should not work with anything else' do
-      expect {
-        duration = WorkingHours::Duration.new(42, :foo)
-      }.to raise_error ArgumentError, "Invalid working time unit: foo"
+      expect do
+        WorkingHours::Duration.new(42, :foo)
+      end.to raise_error ArgumentError, 'Invalid working time unit: foo'
     end
   end
 
@@ -44,22 +45,22 @@ describe WorkingHours::Duration do
   end
 
   describe '#since' do
-    it "performs addition with Time.now" do
+    it 'performs addition with Time.now' do
       Timecop.freeze(Time.utc(1991, 11, 15, 21)) # we are Friday 21 pm UTC
       expect(1.working.day.since).to eq(Time.utc(1991, 11, 18, 21))
     end
 
-    it "is aliased to from_now" do
+    it 'is aliased to from_now' do
       Timecop.freeze(Time.utc(1991, 11, 15, 21)) # we are Friday 21 pm UTC
       expect(1.working.day.from_now).to eq(Time.utc(1991, 11, 18, 21))
     end
 
-    it "accepts reference time as argument" do
+    it 'accepts reference time as argument' do
       expect(1.working.day.since(Time.utc(1991, 11, 15, 21))).to eq(Time.utc(1991, 11, 18, 21))
     end
 
     it 'returns time in config zone' do
-      WorkingHours::Config.time_zone = 'Tokyo'
+      WorkingHours::Config.new.time_zone = 'Tokyo'
       expect(7.working.days.from_now.zone).to eq('JST')
     end
 
@@ -69,24 +70,23 @@ describe WorkingHours::Duration do
   end
 
   describe '#until' do
-    it "performs substraction with Time.now" do
+    it 'performs substraction with Time.now' do
       Timecop.freeze(Time.utc(1991, 11, 15, 21)) # we are Friday 21 pm UTC
       expect(7.working.day.until).to eq(Time.utc(1991, 11, 6, 21))
     end
 
-    it "is aliased to ago" do
+    it 'is aliased to ago' do
       Timecop.freeze(Time.utc(1991, 11, 15, 21)) # we are Friday 21 pm UTC
       expect(7.working.day.ago).to eq(Time.utc(1991, 11, 6, 21))
     end
 
-    it "accepts reference time as argument" do
+    it 'accepts reference time as argument' do
       expect(7.working.day.until(Time.utc(1991, 11, 15, 21))).to eq(Time.utc(1991, 11, 6, 21))
     end
 
     it 'returns time in config zone' do
-      WorkingHours::Config.time_zone = 'Tokyo'
+      WorkingHours::Config.new.time_zone = 'Tokyo'
       expect(7.working.days.ago.zone).to eq('JST')
     end
   end
-
 end

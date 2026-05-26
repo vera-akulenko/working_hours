@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe WorkingHours::DurationProxy do
@@ -9,7 +11,6 @@ describe WorkingHours::DurationProxy do
   end
 
   context 'proxy methods' do
-
     let(:proxy) { WorkingHours::DurationProxy.new(42) }
 
     WorkingHours::Duration::SUPPORTED_KINDS.each do |kind|
